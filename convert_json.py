@@ -1,8 +1,18 @@
 import os
-from semesterplan import Semesterplan
+from semesterplan import SemesterEvent, Semesterplan
 
 FOLDER_IN = "./input"
 FOLDER_OUT = "./output_json"
+
+
+def cleanup(sp: Semesterplan):
+    for event in sp.events:
+        if event.name.startwith("- Prof. Berg Tag_der_Deutschen_Einheit"):
+            sp.events.remove(event)
+
+        # \d\d.KW (Fr. Herzog) (.+)
+        if event.name.startwith(""):
+            sp.events.remove(event)
 
 
 def read_pdf_folder(folder_name):

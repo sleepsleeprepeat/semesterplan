@@ -16,15 +16,18 @@ def read_pdf_folder(folder_name):
 
 
 def main():
-    sp = Semesterplan("./test2.pdf")
-    sp.parse()
-
     files = read_pdf_folder(FOLDER_IN)
 
     for file in files:
-        with open(os.path.join(FOLDER_OUT, file[:-4] + ".ics"), "w") as f:
-            f.writelines(sp.to_ical())
+        sp = Semesterplan(os.path.join(FOLDER_IN, file))
+        sp.parse()
+
+        path = os.path.join(FOLDER_OUT, file[:-4] + ".ics")
+        with open(path, "w", encoding="utf-8") as f:
+            f.writelines(sp.to_ics())
             f.close()
+
+        print(f"Created ics file {file[:-4] + '.ics'}")
 
 
 if __name__ == "__main__":
